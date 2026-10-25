@@ -1,29 +1,55 @@
-// 1. Ask the user for their first name and store it in Fname
-let Fname = prompt("Enter your first name:");
+// Gets the main output container element from the webpage
+const outputDiv = document.getElementById("output");
 
-// Display an initial welcome message containing the entered name
-alert("Welcome, " + Fname + "!");
+// Helper function to append text directly to the webpage
+function displayMessage(text) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    outputDiv.appendChild(paragraph);
+}
 
-// 2. Create the constant piValue / myPi to store Pi to 7 significant digits
-const piValue = 3.1415926;
-const myPi = piValue; // Alias provided to satisfy both variable names mentioned in instructions
+// For Loop (Odd or Even 0 to 10)
+displayMessage("--- Task 1: For Loop (Odd or Even) ---");
 
-// 3. Ask the user to input their favorite number and store it in myFavNum
-let myFavNum = prompt("Enter your favorite number:");
+for (let i = 0; i <= 10; i++) {
+    // Checks if the current number is divisible by 2 with no remainder
+    if (i % 2 === 0) {
+        displayMessage("Count " + i + " is even");
+    } else {
+        displayMessage("Count " + i + " is odd");
+    }
+}
 
-// Convert input to a Number data type for calculation
-let numericFavNum = Number(myFavNum);
+// Do While Loop with User Input
+displayMessage("--- Task 2: Do While Loop ---");
 
-// 4. Calculate the area of a circle using myFavNum as radius (A = π * r^2)
-// 5. Store the result in myArea using myPi
-let myArea = myPi * (numericFavNum ** 2);
+// Prompts the user for a number between 5 and 20
+let myNum = prompt("Please enter a number between 5 and 20:");
 
-// Construct the output message describing each variable
-let message = "Hello " + Fname + ", you entered " + myFavNum + " as your favorite number. " +
-              "If that was the radius of a circle, the circle's area would be " + myArea + ".";
+// Converts input string to a number
+myNum = Number(myNum);
 
-// Display the contents to the webpage
-document.getElementById("output").textContent = message;
+// Initializes loop counter at 1
+let counter = 1;
 
-// Log to console for verification
-console.log(message);
+// Execute the loop at least once and continue until counter reaches myNum
+do {
+    displayMessage("Do While Loop Counter: " + counter);
+    counter++;
+} while (counter <= myNum);
+
+// Arrays & Array Methods
+displayMessage("--- Task 3: Array Values with forEach() ---");
+
+// Stores the subjects in an array
+const subjects = ["History", "Literature", "Programming", "Marine Biology", "Nursing"];
+
+// Displays each subject using the forEach() method
+subjects.forEach(function(subject) {
+    displayMessage("Subject: " + subject);
+});
+
+displayMessage("--- Task 3: Array Values Separated by Commas ---");
+
+// Displays all array elements separated by commas in a single statement using .join()
+displayMessage("Subjects list: " + subjects.join(", "));
