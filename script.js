@@ -1,55 +1,56 @@
-// Gets the main output container element from the webpage
 const outputDiv = document.getElementById("output");
 
-// Helper function to append text directly to the webpage
+// Function to display messages on the webpage
 function displayMessage(text) {
     const paragraph = document.createElement("p");
     paragraph.textContent = text;
     outputDiv.appendChild(paragraph);
 }
 
-// For Loop (Odd or Even 0 to 10)
-displayMessage("--- Task 1: For Loop (Odd or Even) ---");
-
-for (let i = 0; i <= 10; i++) {
-    // Checks if the current number is divisible by 2 with no remainder
-    if (i % 2 === 0) {
-        displayMessage("Count " + i + " is even");
-    } else {
-        displayMessage("Count " + i + " is odd");
-    }
+// Function to validate the service quality
+function validateQuality(quality) {
+    return quality === "excellent" || quality === "good" || quality === "poor";
 }
 
-// Do While Loop with User Input
-displayMessage("--- Task 2: Do While Loop ---");
+// Function to validate the service amount
+function validateAmount(amount) {
+    return Number.isFinite(amount) && amount >= 5 && amount <= 500;
+}
 
-// Prompts the user for a number between 5 and 20
-let myNum = prompt("Please enter a number between 5 and 20:");
+// Function to calculate and return the recommended tip
+function calculateTip(amount, quality) {
+    let tipPercentage;
 
-// Converts input string to a number
-myNum = Number(myNum);
+    if (quality === "excellent") {
+        tipPercentage = 0.20;
+    } else if (quality === "good") {
+        tipPercentage = 0.15;
+    } else {
+        tipPercentage = 0.10;
+    }
 
-// Initializes loop counter at 1
-let counter = 1;
+    return amount * tipPercentage;
+}
 
-// Execute the loop at least once and continue until counter reaches myNum
-do {
-    displayMessage("Do While Loop Counter: " + counter);
-    counter++;
-} while (counter <= myNum);
+// Prompt the user for the service amount
+const amountInput = prompt("Enter the service amount in dollars ($5.00 - $500.00):");
+const serviceAmount = Number(amountInput);
 
-// Arrays & Array Methods
-displayMessage("--- Task 3: Array Values with forEach() ---");
+// Prompt the user for the service quality
+const qualityInput = prompt("Enter the service quality (excellent, good, or poor):");
+const serviceQuality = qualityInput === null ? "" : qualityInput.trim().toLowerCase();
 
-// Stores the subjects in an array
-const subjects = ["History", "Literature", "Programming", "Marine Biology", "Nursing"];
+// Validate the entered information
+if (amountInput === null || amountInput.trim() === "" || !validateAmount(serviceAmount)) {
+    displayMessage("Invalid service amount. Please enter an amount between $5.00 and $500.00.");
+} else if (!validateQuality(serviceQuality)) {
+    displayMessage("Invalid service quality. Please enter excellent, good, or poor.");
+} else {
+    // Calculate the recommended tip
+    const tipAmount = calculateTip(serviceAmount, serviceQuality);
 
-// Displays each subject using the forEach() method
-subjects.forEach(function(subject) {
-    displayMessage("Subject: " + subject);
-});
-
-displayMessage("--- Task 3: Array Values Separated by Commas ---");
-
-// Displays all array elements separated by commas in a single statement using .join()
-displayMessage("Subjects list: " + subjects.join(", "));
+    // Display the results
+    displayMessage("Service Amount: $" + serviceAmount.toFixed(2));
+    displayMessage("Service Quality: " + serviceQuality);
+    displayMessage("Recommended Tip: $" + tipAmount.toFixed(2));
+}
