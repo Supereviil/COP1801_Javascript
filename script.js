@@ -1,56 +1,60 @@
-const outputDiv = document.getElementById("output");
+"use strict";
 
-// Function to display messages on the webpage
-function displayMessage(text) {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = text;
-    outputDiv.appendChild(paragraph);
+// Part 1: Create an object using an object literal
+const myDog = {
+    name: "Brain",
+    show: "Inspector Gadget",
+    breed: "Mixed breed",
+    role: "Penny's pet dog and secret helper",
+    mySound: "I'm the one solving the mysteries, but Gadget gets all the credit!"
+};
+
+// Display the object literal information
+const dogMessage = `Hello, my name is ${myDog.name}.
+When I bark, ${myDog.mySound}
+I starred in the TV show ${myDog.show}.
+My character is a ${myDog.breed}.
+I am ${myDog.role}.`;
+
+
+// Part 2: Create a dog using an object constructor
+function Dog(name, show, breed, role, mySound, canTalk) {
+    this.name = name;
+    this.show = show;
+    this.breed = breed;
+    this.role = role;
+    this.mySound = mySound;
+    this.canTalk = canTalk;
+
+    // Method to display the dog's greeting
+    this.myGreeting = function() {
+        return `Hello, my name is ${this.name}.
+When I bark, ${this.mySound}
+I starred in the TV show ${this.show}.
+My character is a ${this.breed}.
+I am ${this.role}.
+Can I talk? ${this.canTalk ? "Yes!" : "No!"}`;
+    };
 }
 
-// Function to validate the service quality
-function validateQuality(quality) {
-    return quality === "excellent" || quality === "good" || quality === "poor";
-}
+// Create an object using the constructor
+const myDogConst = new Dog(
+    "Brain",
+    "Inspector Gadget",
+    "Mixed breed",
+    "Penny's pet dog and secret helper",
+    "I'm the one solving the mysteries, but Gadget gets all the credit!",
+    false
+);
 
-// Function to validate the service amount
-function validateAmount(amount) {
-    return Number.isFinite(amount) && amount >= 5 && amount <= 500;
-}
 
-// Function to calculate and return the recommended tip
-function calculateTip(amount, quality) {
-    let tipPercentage;
+// Part 3: Display both objects on the webpage
+const output = document.getElementById("output");
 
-    if (quality === "excellent") {
-        tipPercentage = 0.20;
-    } else if (quality === "good") {
-        tipPercentage = 0.15;
-    } else {
-        tipPercentage = 0.10;
-    }
+output.innerHTML = `
+    <h2>Object Literal</h2>
+    <p>${dogMessage}</p>
 
-    return amount * tipPercentage;
-}
-
-// Prompt the user for the service amount
-const amountInput = prompt("Enter the service amount in dollars ($5.00 - $500.00):");
-const serviceAmount = Number(amountInput);
-
-// Prompt the user for the service quality
-const qualityInput = prompt("Enter the service quality (excellent, good, or poor):");
-const serviceQuality = qualityInput === null ? "" : qualityInput.trim().toLowerCase();
-
-// Validate the entered information
-if (amountInput === null || amountInput.trim() === "" || !validateAmount(serviceAmount)) {
-    displayMessage("Invalid service amount. Please enter an amount between $5.00 and $500.00.");
-} else if (!validateQuality(serviceQuality)) {
-    displayMessage("Invalid service quality. Please enter excellent, good, or poor.");
-} else {
-    // Calculate the recommended tip
-    const tipAmount = calculateTip(serviceAmount, serviceQuality);
-
-    // Display the results
-    displayMessage("Service Amount: $" + serviceAmount.toFixed(2));
-    displayMessage("Service Quality: " + serviceQuality);
-    displayMessage("Recommended Tip: $" + tipAmount.toFixed(2));
-}
+    <h2>Object Constructor</h2>
+    <p>${myDogConst.myGreeting()}</p>
+`;
